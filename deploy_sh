@@ -1,0 +1,4 @@
+#!/bin/bash
+cd ~/nixnotes
+source .venv/bin/activate
+mkdocs gh-deploy --force

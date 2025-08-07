@@ -1,0 +1,13 @@
+site_name: nixnotes
+theme:
+  name: material
+  features:
+    - content.code.annotate  # Подсветка кода
+    - navigation.tabs
+plugins:
+  - git-revision-date
+markdown_extensions:
+  - toc:
+      permalink: true
+  - codehilite
+
