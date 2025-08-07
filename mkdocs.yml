@@ -10,4 +10,7 @@ markdown_extensions:
   - toc:
       permalink: true
   - codehilite
-
+nav:
+  - Home: index.md
+  - Base coommands: com.md
+  - Docker steps: Docker.md
