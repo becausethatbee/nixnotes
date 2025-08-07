@@ -316,7 +316,66 @@
 
   <h1>Docker steps</h1>
 
+<ol>
+<li>
+<p>Установка Docker на CentOS </p>
+<p>Обновляем систему:</p>
+<div class="codehilite"><pre><span></span><code>    sudo yum update -y &amp;&amp; sudo yum upgrade -y
+</code></pre></div>
 
+<p>Установим пакеты, которые требуются для работы Docker:</p>
+<div class="codehilite"><pre><span></span><code>    sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+</code></pre></div>
+
+<p>yum-utils - содержит утилиты для работы с YUM, включая yum-config-manager
+device-mapper-persistent-data и lvm2 - требуются для работы драйвера хранения devicemapper, который Docker использует по умолчанию</p>
+<p>Добавим стабильный репозиторий Docker:</p>
+<p>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo </p>
+<p>yum-config-manager - утилита для управления репозиториями YUM
+   --add-repo - параметр для добавления нового репозитория</p>
+<p>Установим Docker и его компоненты:</p>
+<div class="codehilite"><pre><span></span><code>sudo yum install -y docker-ce docker-ce-cli containerd.io
+
+docker-ce - основной пакет Docker Community Edition
+
+docker-ce-cli - интерфейс командной строки Docker
+
+containerd.io - среда выполнения контейнеров, которую использует Docker
+</code></pre></div>
+
+<p>Запуск и включение Docker в автозагрузку</p>
+<div class="codehilite"><pre><span></span><code>sudo systemctl start docker
+sudo systemctl enable docker
+</code></pre></div>
+
+<p>systemctl - утилита для управления системными службами в systemd
+start - запуск службы
+enable - включение автозапуска службы при загрузке системы</p>
+<p>Проверка установки</p>
+<div class="codehilite"><pre><span></span><code>    sudo docker run hello-world
+
+docker run - команда для запуска контейнера
+hello-world - тестовый образ, который скачивается и запускается для проверки работы Docker
+</code></pre></div>
+
+<p>Настройка прав:
+По умолчанию для работы с Docker требуются права root. Чтобы использовать Docker без sudo, добавьте текущего пользователя в группу docker:</p>
+<div class="codehilite"><pre><span></span><code>sudo usermod -aG docker $USER
+newgrp docker
+</code></pre></div>
+
+<p>usermod - утилита для изменения параметров пользователя
+-aG - добавить пользователя в дополнительные группы (append to Group)
+docker - группа, которая имеет права на работу с Docker
+$USER - переменная, содержащая имя текущего пользователя
+newgrp - применяет изменения групп без необходимости выхода и входа</p>
+<p>Настройка Docker для автоматического старта:</p>
+<div class="codehilite"><pre><span></span><code>sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+</code></pre></div>
+
+</li>
+</ol>
 
 
 
