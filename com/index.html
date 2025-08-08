@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1" class="md-skip">
+        <a href="#docker-centos-stream-10" class="md-skip">
           Skip to content
         </a>
       
@@ -325,10 +325,64 @@
 
 
 
-<h1 id="1">1<a class="headerlink" href="#1" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span><code>    cd      - #смена директории
-    pwd     - # в какой я директории
-</code></pre></div>
+<h1 id="docker-centos-stream-10">Установка Docker на CentOS Stream 10<a class="headerlink" href="#docker-centos-stream-10" title="Permanent link">&para;</a></h1>
+<p>Ниже приведён полный скрипт с пояснениями в комментариях. Его можно использовать как пошаговую инструкцию — просто выполняйте команды по порядку.</p>
+<p>```bash</p>
+<h1 id="_1">================================<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="1">1. Обновляем систему<a class="headerlink" href="#1" title="Permanent link">&para;</a></h1>
+<h1 id="dnf-centos-stream-10">dnf — менеджер пакетов CentOS Stream 10<a class="headerlink" href="#dnf-centos-stream-10" title="Permanent link">&para;</a></h1>
+<h1 id="update">update — обновление всех установленных пакетов<a class="headerlink" href="#update" title="Permanent link">&para;</a></h1>
+<h1 id="-y">-y — автоматическое подтверждение<a class="headerlink" href="#-y" title="Permanent link">&para;</a></h1>
+<h1 id="_2">Перед установкой нового ПО рекомендуется обновить систему,<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="_3">чтобы избежать конфликтов зависимостей.<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<p>sudo dnf update -y</p>
+<h1 id="_4">================================<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<h1 id="2-dnf">2. Устанавливаем необходимые плагины dnf<a class="headerlink" href="#2-dnf" title="Permanent link">&para;</a></h1>
+<h1 id="dnf-plugins-core-dnf-config-manager">dnf-plugins-core — набор расширений для dnf, включая config-manager<a class="headerlink" href="#dnf-plugins-core-dnf-config-manager" title="Permanent link">&para;</a></h1>
+<h1 id="_5">Эти плагины обязательны для добавления репозиториев.<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
+<p>sudo dnf install -y dnf-plugins-core</p>
+<h1 id="_6">================================<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<h1 id="3-docker">3. Подключаем официальный репозиторий Docker<a class="headerlink" href="#3-docker" title="Permanent link">&para;</a></h1>
+<h1 id="-add-repo">--add-repo — флаг добавления нового репозитория<a class="headerlink" href="#-add-repo" title="Permanent link">&para;</a></h1>
+<h1 id="_7">Используем официальный репозиторий для гарантии актуальности и безопасности пакетов.<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<p>sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</p>
+<h1 id="_8">================================<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
+<h1 id="4-docker">4. Устанавливаем Docker и сопутствующие пакеты<a class="headerlink" href="#4-docker" title="Permanent link">&para;</a></h1>
+<h1 id="docker-ce-docker-community-edition">docker-ce — движок Docker (Community Edition)<a class="headerlink" href="#docker-ce-docker-community-edition" title="Permanent link">&para;</a></h1>
+<h1 id="docker-ce-cli">docker-ce-cli — клиент командной строки<a class="headerlink" href="#docker-ce-cli" title="Permanent link">&para;</a></h1>
+<h1 id="containerdio">containerd.io — контейнерный рантайм<a class="headerlink" href="#containerdio" title="Permanent link">&para;</a></h1>
+<h1 id="docker-buildx-plugin">docker-buildx-plugin — расширенные возможности сборки образов<a class="headerlink" href="#docker-buildx-plugin" title="Permanent link">&para;</a></h1>
+<h1 id="docker-compose-plugin-docker-compose">docker-compose-plugin — встроенный docker compose<a class="headerlink" href="#docker-compose-plugin-docker-compose" title="Permanent link">&para;</a></h1>
+<h1 id="_9">Рекомендуется устанавливать все эти пакеты сразу,<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
+<h1 id="_10">чтобы не тратить время на доустановку позже.<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<p>sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</p>
+<h1 id="_11">================================<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h1>
+<h1 id="5-docker">5. Запускаем и включаем автозапуск Docker<a class="headerlink" href="#5-docker" title="Permanent link">&para;</a></h1>
+<h1 id="enable">enable — добавляет сервис в автозагрузку<a class="headerlink" href="#enable" title="Permanent link">&para;</a></h1>
+<h1 id="-now">--now — сразу запускает его<a class="headerlink" href="#-now" title="Permanent link">&para;</a></h1>
+<h1 id="docker">Это позволит Docker работать автоматически после каждой перезагрузки.<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h1>
+<p>sudo systemctl enable --now docker</p>
+<h1 id="_12">================================<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h1>
+<h1 id="6-docker">6. Добавляем пользователя в группу Docker (по желанию)<a class="headerlink" href="#6-docker" title="Permanent link">&para;</a></h1>
+<h1 id="-ag">-aG — добавить пользователя в группу без удаления из других<a class="headerlink" href="#-ag" title="Permanent link">&para;</a></h1>
+<h1 id="user">$USER — переменная с именем текущего пользователя<a class="headerlink" href="#user" title="Permanent link">&para;</a></h1>
+<h1 id="docker-sudo">Это позволит использовать Docker без sudo.<a class="headerlink" href="#docker-sudo" title="Permanent link">&para;</a></h1>
+<h1 id="docker-root">Важно: доступ к Docker фактически равен правам root —<a class="headerlink" href="#docker-root" title="Permanent link">&para;</a></h1>
+<h1 id="_13">применяйте это только на доверенных системах.<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h1>
+<p>sudo usermod -aG docker $USER</p>
+<h1 id="_14">Применяем изменения групп в текущей сессии<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h1>
+<p>newgrp docker</p>
+<h1 id="_15">================================<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h1>
+<h1 id="7">7. Проверяем установку<a class="headerlink" href="#7" title="Permanent link">&para;</a></h1>
+<h1 id="docker-version">docker version — проверка версий клиента и сервера<a class="headerlink" href="#docker-version" title="Permanent link">&para;</a></h1>
+<h1 id="docker-compose-version-compose">docker compose version — проверка наличия плагина compose<a class="headerlink" href="#docker-compose-version-compose" title="Permanent link">&para;</a></h1>
+<h1 id="docker-run-rm-hello-world">docker run --rm hello-world — запуск тестового контейнера<a class="headerlink" href="#docker-run-rm-hello-world" title="Permanent link">&para;</a></h1>
+<h1 id="-rm">--rm — автоматически удалить контейнер после завершения<a class="headerlink" href="#-rm" title="Permanent link">&para;</a></h1>
+<h1 id="hello-world">Если вывод hello-world сообщает, что установка прошла успешно —<a class="headerlink" href="#hello-world" title="Permanent link">&para;</a></h1>
+<h1 id="docker_1">Docker готов к работе.<a class="headerlink" href="#docker_1" title="Permanent link">&para;</a></h1>
+<p>docker version
+docker compose version
+docker run --rm hello-world</p>
 
 
 
